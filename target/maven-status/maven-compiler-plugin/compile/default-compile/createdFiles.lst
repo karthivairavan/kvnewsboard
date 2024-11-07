@@ -1,0 +1,4 @@
+com\example\demo\DemoApplication.class
+com\example\demo\service\NewsService$NewsItem.class
+com\example\demo\controller\NewsController.class
+com\example\demo\service\NewsService.class

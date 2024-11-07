@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>KV News board</title>
+    <meta http-equiv="refresh" content="60"> <!-- Refresh the page every 60 seconds -->
+    <style>
+        body {
+            font-family: Verdana, Geneva, sans-serif;
+            font-size: 14px;
+            background-color: #f6f6ef;
+            margin: 0;
+            padding-top: 80px; /* Space for the fixed header */
+            color: #333;
+        }
+
+        /* Make the header fixed at the top and increase font size */
+        .news-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: white; /* Ensure the header has a background color */
+            z-index: 1000; /* Keep it above other elements */
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for separation */
+            text-align: center;
+        }
+
+        .news-header h1 {
+            font-size: 36px; /* Increased font size (1.5x) */
+            color: #ff6600;
+            margin: 0;
+        }
+
+        .news-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f6f6ef;
+        }
+
+        .news-item {
+            display: flex;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-bottom: 1px solid #e6e6e6;
+        }
+
+        .news-image {
+            margin-right: 15px;
+        }
+
+        .news-image img {
+            width: 400px;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .news-content {
+            flex-grow: 1;
+        }
+
+        a {
+            text-decoration: none;
+            color: #0000ff;
+            font-size: 16px;
+        }
+
+        a:visited {
+            color: #828282;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .description {
+            color: #333;
+            font-size: 14px;
+            margin-top: 5px;
+            line-height: 1.5;
+        }
+
+        .author {
+            color: #828282;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header with fixed position and increased text size -->
+<div class="news-header">
+    <h1>KV News board - <span th:text="${#dates.format(#dates.createNow(), 'dd-MM-yyyy')}"></span></h1>
+</div>
+
+<div class="news-container">
+    <div th:if="${error}">
+        <p th:text="${error}"></p>
+    </div>
+
+    <!-- Iterate through each news item -->
+    <div th:each="item : ${newsList}" class="news-item">
+        <!-- News image on the left side -->
+        <div class="news-image">
+            <img th:src="${(item.image != null && item.image != 'None') ? item.image : '/images/dummy-news-image.jpg'}"
+                 alt="News Image"
+                 onerror="this.onerror=null; this.src='images/dummy-news-image.jpg';" />
+        </div>
+        <div class="news-content">
+            <!-- News title as a clickable link -->
+            <a th:href="${item.url}" th:text="${item.title}" target="_blank"></a>
+            <!-- News description -->
+            <p class="description" th:text="${item.description}"></p>
+            <!-- News author -->
+            <p class="author">Author: <span th:text="${item.author}"></span></p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
